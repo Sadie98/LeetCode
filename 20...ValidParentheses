@@ -1,18 +1,23 @@
 /**
- * @param {string[]} strs
- * @return {string}
+ * @param {string} s
+ * @return {boolean}
  */
-var longestCommonPrefix = function(strs) {
-    let res = '';
-    if(!strs.length) return res;
-    if(strs.length === 1) return strs[0];
+var isValid = function(s) {
+    let opened = [];
     
-    for(let i = 0; i < strs[0].length; i++){
-        for(let wordNum = 0; wordNum < strs.length; wordNum++){
-            if(!strs[wordNum][i] || strs[wordNum][i] !== strs[0][i]) return res;
+    for(let i = 0; i < s.length; i++){
+        if(s[i] === '(' || s[i] === '[' || s[i] === '{'){
+          opened.push(s[i]);  
+        }else{
+            let openedSymb = opened.pop();
+            
+            if(s[i] === ')' && openedSymb !== '(' ||
+               s[i] === '}' && openedSymb !== '{' ||
+               s[i] === ']' && openedSymb !== '['){
+                return false;
+            }
         }
-        
-        res += strs[0][i];
     }
     
-    ret
+    return (opened.length) ? false : true;
+};
